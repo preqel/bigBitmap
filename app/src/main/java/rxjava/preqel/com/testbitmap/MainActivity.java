@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
+//一个加载大图的acitivity
 public class MainActivity extends AppCompatActivity {
 
     private ImageView imageView;
@@ -20,9 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        context = MainActivity.this;
-        imageView = findViewById(R.id.imageview);
+        initView();
         String path = "/storage/emulated/0/Download/fc1f4134970a304ec0fb5afcd3c8a786c8175cdf.jpg";
         Bitmap ressult = decodeBitmapForSize(path, 200, 200);
         ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
@@ -30,25 +29,29 @@ public class MainActivity extends AppCompatActivity {
         BitmapDrawable bitmapDrawable = new BitmapDrawable(ressult);
         int aftercount = bitmapDrawable.getBitmap().getByteCount();
         Log.d("TAG","after deal the bytecount:"+ aftercount);
+        imageView.setBackground(bitmapDrawable);
+    }
 
-       // imageView.setBackground(bitmapDrawable);
-
+    private void initView() {
+        this.context = MainActivity.this;
+        this.imageView = findViewById(R.id.imageview);
     }
 
 
     public   Bitmap decodeBitmapForSize(String path, int width, int height) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
-//        if (width != 0 && height != 0) {
-//            // decode with inJustDecodeBounds=true to check size
-//            options.inJustDecodeBounds = true;
-//            BitmapFactory.decodeResource(context.getResources(),R.drawable.mmm,options);
-//
-//           // BitmapFactory.decodeFile(path, options);
-//            // calculate inSampleSize according to the requested size
-//            options.inSampleSize = calculateInSampleSize(options, width, height);
-//            Log.d("TAG","after insamplesize:"+ options.inSampleSize);
-//            options.inJustDecodeBounds = false;
-//        }
+        if (width != 0 && height != 0) {
+            // decode with inJustDecodeBounds=true to check size
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeResource(context.getResources(),R.drawable.mmm,options);
+
+           // BitmapFactory.decodeFile(path, options);
+            // calculate inSampleSize according to the requested size
+           options.inSampleSize = calculateInSampleSize(options, width, height);
+//           options.in
+            Log.d("TAG","after insamplesize:"+ options.inSampleSize);
+            options.inJustDecodeBounds = false;
+        }
         // decode bitmap with the calculated inSampleSize
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         options.inPurgeable = true;
@@ -71,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return initSize;
-
     }
 
 
