@@ -4,14 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
-//一个加载大图的acitivity
+//一个加载大图的Activity
 public class MainActivity extends AppCompatActivity {
 
     private ImageView imageView;
@@ -22,28 +20,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        String path = "/storage/emulated/0/Download/fc1f4134970a304ec0fb5afcd3c8a786c8175cdf.jpg";
-        Bitmap ressult = decodeBitmapForSize(path, 200, 200);
-        ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
-        imageView.setScaleType(scaleType);
+        Bitmap ressult = decodeBitmapForSize(  200, 200);
         BitmapDrawable bitmapDrawable = new BitmapDrawable(ressult);
         int aftercount = bitmapDrawable.getBitmap().getByteCount();
-        Log.d("TAG","after deal the bytecount:"+ aftercount);
+        Log.d("TAG","after deal the bytecount:"+ aftercount); //打印
         imageView.setBackground(bitmapDrawable);
     }
 
     private void initView() {
         this.context = MainActivity.this;
         this.imageView = findViewById(R.id.imageview);
+        ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
+        imageView.setScaleType(scaleType);
     }
 
 
-    public   Bitmap decodeBitmapForSize(String path, int width, int height) {
+    public   Bitmap decodeBitmapForSize( int width, int height) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         if (width != 0 && height != 0) {
             // decode with inJustDecodeBounds=true to check size
             options.inJustDecodeBounds = true;
-            BitmapFactory.decodeResource(context.getResources(),R.drawable.mmm,options);
+            BitmapFactory.decodeResource(context.getResources(),R.drawable.bigm,options);
 
            // BitmapFactory.decodeFile(path, options);
             // calculate inSampleSize according to the requested size
